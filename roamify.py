@@ -1,8 +1,10 @@
 import sys, os, json
-import pandas as pd
+import argparse
 from datetime import datetime
+import pandas as pd
+import capture
 
-def main(path):
+def roamify(path):
     if os.path.exists(path):
         with open(path) as f: 
             capture = json.load(f)
@@ -43,5 +45,17 @@ def main(path):
     print("\n".join(lines))
 
 if __name__=="__main__":
-    path = os.path.expanduser('~/GoogleDrive/capture.json')
-    main(path)
+    parser = argparse.ArgumentParser(description='Import flashcards from Roam to Anki')
+    parser.add_argument('--path', action='store', type=str,
+        default="~/GoogleDrive/capture.json",
+        help='filepath which captures are saved in')
+    parser.add_argument('--reset', action='store_true',
+        help='reset capture file after roamifying')
+    args = parser.parse_args()
+
+    path = os.path.expanduser(args.path)
+    roamify(path)
+
+    if args.reset:
+        capture.reset(path)
+

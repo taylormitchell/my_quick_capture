@@ -23,6 +23,10 @@ def capture(title, text, url, path="~/capture.json"):
     with open(path, 'w+') as f:
         json.dump(capture, f, indent=4)
 
+def reset(path):
+    with open(path, 'w+') as f:
+        json.dump({'items': []}, f, indent=4)
+
 if __name__=="__main__":
     path = os.path.expanduser("~/GoogleDrive/capture.json")
     title, text, url = sys.argv[1:4]

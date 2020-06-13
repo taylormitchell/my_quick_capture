@@ -1,9 +1,11 @@
+"Simple text quick capture"
+
 import os
 import json
 import time
 import sys
 
-def capture(title, text, url, path="~/capture.json"):
+def capture(text, path="~/capture.json"):
     # Load existing captures
     path = os.path.expanduser(path)
     if os.path.exists(path):
@@ -14,9 +16,7 @@ def capture(title, text, url, path="~/capture.json"):
 
     # Add capture
     item = {
-        'title':title,
         'text':text,
-        'url':url,
         'created': int(time.time())
     }
     capture['items'].append(item)
@@ -29,5 +29,5 @@ def reset(path):
 
 if __name__=="__main__":
     path = os.path.expanduser("~/GoogleDrive/capture.json")
-    title, text, url = sys.argv[1:4]
-    capture(title, text, url, path)
+    text = sys.argv[1]
+    capture(text, path)
